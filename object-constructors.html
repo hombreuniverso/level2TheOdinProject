@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Object Constructor Practice</title>
+  </head>
+  <body>
+    <script>
+      //Create object construtor for book information
+      function Book(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+        this.info = function () {
+          //Return info as a string
+          return `${this.title}, ${this.author}, ${this.pages}, ${this.read}`;
+        };
+      }
+
+      //Create specific books using object constructor
+      //and save to a variable
+      const notWorry = new Book(
+        "Do not Worry!",
+        "Colin Karr",
+        "500 pages",
+        "read already"
+      );
+      const myBio = new Book(
+        "My Autobiography",
+        "Janice Charles",
+        "560 pages",
+        "not read as yet"
+      );
+
+      //Call a specific book and log to console
+      //console.log(myBio.info());
+      //console.log(myBio.read)
+
+      //Check the object's property and log to console
+      console.log(Object.getPrototypeOf(notWorry) === Book.prototype);
+      console.log(Object.getPrototypeOf(myBio) === Book.prototype);
+
+      //Create player object constructor (prototype)
+      function Player(name, choice) {
+        this.name = name;
+        this.choice = choice;
+        this.sayName = function () {
+          return `${this.name}`;
+        };
+        return `${this.name}: ${this.choice}`;
+      }
+
+      //Create specific player objects and store in variable
+      let player1 = new Player("Barry", "X");
+      let player2 = new Player("Jane", "O");
+
+      //Console log a specific player object
+      console.log(player2.valueOf());
+
+      //Use "Object.getPrototypeOf()" to get or
+      //view the prototype of an object
+
+      //Check the object's property and log to console
+      console.log(Object.getPrototypeOf(player1) === Player.prototype); //true
+      console.log(Object.getPrototypeOf(player2) === Player.prototype); //true
+
+      //Check hasOwnProperty
+      console.log(player1.hasOwnProperty("valueOf")); //false
+      console.log(Object.prototype.hasOwnProperty("valueOf")); //true
+      //Only the object constructor prototype hasOwnProperty valueOf
+
+      //Use "Object.setPrototypeOf()" to set or
+      //mutate the prototype of an object
+
+      //Add a new object constructor (prototype) to Player
+      function Person(name) {
+        this.name = name;
+      }
+
+      Person.prototype.sayName = function () {
+        console.log(`Hello. I'm ${this.name}!`);
+      };
+
+      function Player(name, marker) {
+        this.name = name;
+        this.marker = marker;
+      }
+
+      Player.prototype.getMarker = function () {
+        console.log(`My marker is '${this.marker}'`);
+      };
+
+      Object.getPrototypeOf(Player.prototype); //returns
+      //Object.prototype instead of Person.prototype
+
+      //Make 'Player' objects inherit from 'Person'
+      Object.setPrototypeOf(Player.prototype, Person.prototype);
+      Object.getPrototypeOf(Player.prototype); //returns
+      //Person.prototype instead of Object.prototype
+
+      player1 = new Player("steve", "X");
+
+      player1.sayName(); //Hello. I'm steve!
+
+      player1.getMarker(); //My marker is 'X'
+    </script>
+  </body>
+</html>

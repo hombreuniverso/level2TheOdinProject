@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prototypal Inheritance</title>
+  </head>
+  <body>
+    <script>
+      let animal = {
+        //Add property
+        eats: true,
+
+        //Add method
+        walk() {
+          return "An animal walks.";
+        },
+      };
+
+      let rabbit = {
+        jumps: true,
+      };
+
+      let longEar = {
+        earLength: 10,
+      };
+
+      Object.getPrototypeOf(rabbit);
+      //console.log(Object.getPrototypeOf(rabbit));
+
+      //Rabbit does not have the 'eats' property
+      console.log(rabbit.eats); //undefined
+
+      //Set Rabbit to share animal properties
+      Object.setPrototypeOf(rabbit, animal);
+
+      //Set longEar to share rabbit properties
+      Object.setPrototypeOf(longEar, rabbit);
+
+      //If a method is found in the object, that method will be
+      //used. The same method in the prototype(found higher up
+      //the chain) would not be searched for and will not be used
+
+      rabbit.walk = function () {
+        return `Rabbit is right here. Look no further!`;
+      };
+      
+      console.log(rabbit.eats); //true
+      console.log(rabbit.walk()); //An animal walks.(from
+      //prototype animal) but
+      //Rabbit is right here. Look no further!(from rabbit
+      //object itself)
+
+      console.log(longEar.jumps);
+
+      //Getter and Setter functions
+      //Create object "user"
+      let user = {
+        //Declare/ assign object properties
+        name: "John",
+        surname: "Smith",
+
+        //Create setter function
+        set fullName(value) {
+          [this.name, this.surname] = value.split(" ");
+        },
+
+        get fullName() {
+          return `${this.name} ${this.surname}`;
+        },
+      };
+
+      //Create object "admin"
+      let admin = {
+        isAdmin: true,
+      };
+      //Set admin to share user properties and methods
+      Object.setPrototypeOf(admin, user);
+
+      //Getter triggers
+      console.log(admin.fullName); //John Smith
+
+      //Setter triggers
+      admin.fullName = "Alice Cooper";
+
+      console.log(admin.fullName); //Alice Cooper
+
+      //"this" keyword
+      //this is always the object before the dot and as 
+      //such, data written to "this" would be stored in 
+      //the relevant object, i.e. "before the dot" e.g:
+      //admin.fullName - info written to "this" will be
+      //stored in the object "admin". Therefore,
+      //methods are shared, but the object state is not
+
+      //for...in loop
+      //The for...in loop iterates over inherited 
+      //properties
+
+      //Object.keys only returns own keys
+      console.log((Object.keys(rabbit))); //jumps, walk
+    
+      //for...in loops over both own and inherited keys
+      for(let prop in rabbit) console.log(prop);
+
+      //obj.hasOwnProperty(key) returns true if obj has
+      //its own (not inherited) property named key e.g:
+      for(let prop in rabbit){
+        if(rabbit.hasOwnProperty(prop)){
+          console.log(`Our own keys: ${prop}`);
+        }else{
+          console.log(`Inherited keys: ${prop}`);
+        }
+      }
+      //for...in loop only lists enumerable properties and
+      //Object.prototype properties are not enumerable; 
+      //they are not listed
+      //Additionally, almost all other key/ value getting
+      //methods such as Object.keys, Object.values for 
+      //example ignore inherited properties
+
+    </script>
+  </body>
+</html>

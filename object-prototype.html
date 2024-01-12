@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Object Prototype</title>
+  </head>
+  <body>
+    <script>
+            //Create object literal
+            //let x = {};
+
+            //Create object constructor
+            let x = new Object();
+
+            //Double brackets mean interal property
+            //which cannot be accessed directly in code
+            //e.g.[[Prototype]]
+
+            //Find the [[Prototype]] of the Object x
+            //Normal/ Modern Way
+            Object.getPrototypeOf(x);
+            console.log(Object.getPrototypeOf(x));
+
+            //Legacy Way
+            x._proto_;
+            console.log(x._proto_); //undefined. Perhaps not
+            //present in Firefox
+
+            //Since every object has a [[Prototype]], two or more
+            //Objects can be linked as a result
+
+            //Prototype Inheritance
+            //When attempt to access a property or method of
+            //an object is made, the object itself is checked first,
+            //followed by the object's [[Prototype]], followed by
+            //the prototype of the linked object.
+
+            //The Object. prototype is the end of the
+            //prototype chain
+
+            //The prototype chain for object x is one link:
+            //x(object itself) => Object(prototype)
+
+            //Arrays
+            //An array is an object. Thus it can be created
+            //through a literal or a constructor
+            //Array Literal
+            //let y = [];
+
+            //Array Constructor
+            let y = new Array();
+
+            //Array.prototype has even more properties and methods
+            //than an Object.prototype
+            Object.getPrototypeOf(y);
+            console.log(Object.getPrototypeOf(y));
+
+            //The prototype chain for array y is two links:
+            //y(object itself) => Array(constructor) => Object(prototype)
+
+            //Check if both the constructor and the object
+            //are properties of the array y
+            Array.prototype.isPrototypeOf(y);
+            Object.prototype.isPrototypeOf(Array);
+            console.log(Array.prototype.isPrototypeOf(y));
+            console.log(Object.prototype.isPrototypeOf(Array));
+
+            //The instanceof operator tests if the prototype
+            //property of a constructor appears anywhere within
+            //an object's prototype chain
+            y instanceof Array; //true
+            console.log(y instanceof Array);
+
+            //Summary
+            //All JavaScript objects have a hidden, internal
+            //[[Prototype]]. Objects can be extended and will
+            //inherit the properties and methods on [[Prototype]]
+            //of thier constructor. Prototypes can be chained,
+            //and each additional object will inherit everything
+            //throughout the chain.
+
+            //Constructor Functions
+
+            //A regular function becomes a constructor when it
+            //is used to create an instance of an object using
+            //the "new" keyword
+
+            //Initialize a constructor function for a Hero
+            //with two properties "name" and "level"
+            function Hero(name, level) {
+              this.name = name;
+              this.level = level;
+            }
+            //The "this" key word refers to every new object that
+            //is created from the constructor
+
+            
+            //Create an instance of a Hero from the constructor
+            //and save to variable
+            let hero1 = new Hero("Barry", 1);
+          
+
+            
+            //Get [[Prototype]] of hero1
+            Object.getPrototypeOf(hero1);
+            console.log(Object.getPrototypeOf(hero1));
+            
+
+            //Create a method on the prototype named "greet()"
+            Hero.prototype.greet = function(){
+              return `${this.name} says hello.`;
+            }
+
+            
+            //Use method 'greet()' on hero1 object
+            hero1.greet();
+            console.log(hero1.greet());
+            
+
+            //Classes
+            //Create classes made up of other constructor
+            //functions that have properties and methods unique to
+            //only those classes or constructors but still inherit
+            //basic/ general/ common properties and methods from
+            //the original constructor, in this case: "Hero"
+            //The "call()" method is used to facilitate this
+            //connection or inheritance
+
+            //Initialize Warrior constructor
+            function Warrior(name, level, weapon){
+              //Chain constructor with call
+              //Connect new constructor to original constructor
+              Hero.call(this, name, level);
+
+              //Add new property to new constructor Warrior
+              this.weapon = weapon;
+            }
+
+            //Initialize Healer constructor
+            function Healer(name, level, spell){
+              //Chain constructor with call
+              Hero.call(this, name, level);
+
+              //Add new property
+              this.spell = spell;
+            }
+
+            //Add attack method to Warrior
+            Warrior.prototype.attack = function(){
+              return `${this.name} selects ${this.weapon}.`;
+            }
+
+            //Add Heal method to Healer
+            Healer.prototype.heal = function(){
+              return `${this.name} heals with ${this.spell}.`;
+            }
+
+              //Create an instance of warrior
+              let hero2 = new Warrior('John', 3, 'gun');
+
+              //Create an instance of healer
+              let hero3 = new Healer('Jane', 4, 'garlic');
+
+              console.log(hero2.attack());
+              console.log(hero3.heal());
+
+             // hero1.greet();
+            //console.log(hero1.greet());
+
+            //Prototype properties and methods are not automatically
+            //linked when "call()" is used to chain constructors
+            //"Object.setPropertyOf()" does that e.g. links the 
+            //properties in the Hero constructor to the Warrior 
+            //and Healer constructors
+
+            Object.setPrototypeOf(Warrior.prototype, Hero.prototype);
+            Object.setPrototypeOf(Healer.prototype, Hero.prototype);
+
+            //Now all other prototype methods can be added afterwards
+            //Moreover, prototype methods from Hero can be used on 
+            //an instance of a Warrior or Healer
+
+            
+    </script>
+  </body>
+</html>
