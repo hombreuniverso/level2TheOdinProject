@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Roll Book</title>
+    <style>
+      body {
+        padding: 0px;
+        border: 5px solid red;
+      }
+
+      h1 {
+        margin-top: 5px;
+      }
+
+      .container-ui {
+        min-width: 800px;
+        min-height: 475px;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        background-color: aqua;
+      }
+
+      .container-input-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 300px;
+        max-height: 175px;
+        min-width: 300px;
+        border: 3px solid red;
+        background-color: lightblue;
+      }
+
+      .container-pupil-name {
+        text-align: left;
+        margin-bottom: 10px;
+        display: flex;
+        gap: 10px;
+      }
+
+      .container-pupil-name input {
+        width: 135px;
+      }
+
+      .container-dob {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+      }
+
+      .container-dob input {
+        width: 30px;
+      }
+
+      select :first-child {
+        color: rgba(0, 0, 0, 0.5);
+      }
+
+      select :nth-last-child(-n + 12) {
+        color: black;
+      }
+
+      .container-dob #month {
+        width: 100px;
+      }
+
+      button {
+        width: 65px;
+        height: 30px;
+        font-size: 15px;
+        margin-top: 15px;
+        background-color: aqua;
+        font-weight: bold;
+        border-radius: 5px;
+        box-shadow: 1px 1px;
+      }
+
+      .container-display-info { 
+        padding-bottom: 50px;      
+        min-width: 500px;
+        border: 3px solid red;
+        background-color: mintcream;
+      }
+
+      .table-caption-container {
+        
+        display: flex;
+        justify-content: space-around;
+       
+      }
+      caption {
+        width: 300px;
+      }
+
+      table {
+        width: 400px;
+        border-collapse: collapse;
+      }
+
+      th {
+        margin-top: 10px;
+        border: 2px solid black;
+        font-size: 20px;
+      }
+
+      td {
+        text-align: center;
+        border: 2px solid black;
+        font-size: 15px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--UI-container-->
+    <div class="container-ui">
+      <!--Input Data Container-->
+      <div class="container-input-info">
+        <!--Create form-->
+        <h1>Data Form</h1>
+
+        <form>
+          <div class="container-pupil-name">
+            <label for="name"> Pupil's Name </label>
+            <input id="name" value="" />
+          </div>
+
+          <div class="container-dob">
+            <label for="dob"> Date of Birth </label>
+            <div class="container-dob-info">
+              <!--<select id="day">
+                <option>day</option>
+                <option value="1">1st</option>
+                <option value="2">2nd</option>
+                <option value="3">3rd</option>
+                <option value="4">4th</option>
+                <option value="5">5th</option>
+                <option value="6">6th</option>
+                <option value="7">7th</option>
+                <option value="8">8th</option>
+                <option value="9">9th</option>
+                <option value="10">10th</option>
+                <option value="11">11th</option>
+                <option value="12">12th</option>
+                <option value="13">13th</option>
+                <option value="14">14th</option>
+                <option value="15">15th</option>
+                <option value="16">16th</option>
+                <option value="17">17th</option>
+                <option value="18">18th</option>
+                <option value="19">19th</option>
+                <option value="20">20th</option>
+                <option value="21">21st</option>
+                <option value="22">22nd</option>
+                <option value="23">23rd</option>
+                <option value="24">24th</option>
+                <option value="24">25th</option>
+                <option value="26">26th</option>
+                <option value="27">27th</option>
+                <option value="28">28th</option>
+                <option value="29">29th</option>
+                <option value="30">30th</option>
+                <option value="31">31st</option>
+              </select>-->
+
+              <select id="month">
+                <option>month</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+
+              <input id="year" value="" placeholder="year" />
+            </div>
+          </div>
+        </form>
+        <button id="submit-btn">Submit</button>
+      </div>
+      <!--Input Container Ends Here-->
+
+      <!--Create Display Info Container-->
+      <div class="container-display-info">
+        <div class="table-caption-container">
+          <table>
+            <caption>
+              <h1>Date of Birth Display</h1>
+            </caption>
+
+            <tr>
+              <th style="text-align: left">Pupil's Name</th>
+              <!--<th>Day(s)</th>-->
+              <th>Years</th>
+              <th>Month(s)</th>
+            </tr>
+          </table>
+        </div>
+
+        <!--Display Info Container Ends Here-->
+      </div>
+
+      <!--UI ends here-->
+    </div>
+
+    <script>
+      //Create an object constructor
+      function studentData() {
+        this.name = name;
+        //this.day = day;
+        this.year = year;
+        this.month = month;
+      }
+
+      //Create students array to hold input students data
+      let students = [];
+
+      //Create studentStored to hold stored calculated data
+      let storageList = [];
+
+      //Set studentStored to default data to have at least
+      //one item stored (necessary to prevent error
+      //generated by empty array when localStorage is
+      //parsed by JSON)
+      if (localStorage.pupil === "") {
+        storageList = [];
+
+        /* //Push default data to studentStored
+        storageList.push(
+         //new studentData((name = "Blank"), (year = "Blank"), (month = "Blank"))
+     
+         );
+         */
+        //Set local storage with default data
+        localStorage.setItem("pupil", JSON.stringify(storageList));
+      } else {
+        //If there is stored data
+        //Parse local storage on start
+        storageList = JSON.parse(localStorage.getItem("pupil"));
+        //console.log(studentStored);
+      }
+
+      //Reference html elements
+      const inputs = document.querySelectorAll("input");
+      const submitBtn = document.querySelector("#submit-btn");
+      const select = document.querySelectorAll("select");
+      const firstChild = document.querySelector("select:first-child");
+      const table = document.querySelector("table");
+
+      //The default month appears like a placeholder
+      firstChild.style.color = "rgba(0, 0, 0, 0.5)";
+
+      //Important for validation
+      //Ensure that objects and input fields are cleared
+      //before starting
+      clearInput();
+
+      //Add flag for validation
+      let isValid = false;
+
+      displaySavedInfo();
+
+      //Add event listener to loop through all
+      //input fields and set each element in
+      //object constructor to the various input
+      //values
+      inputs.forEach((input) => {
+        input.addEventListener("change", function () {
+          if (input.id === "name") {
+            name = input.value;
+          } else if (input.id === "year") {
+            year = input.value;
+          }
+        });
+      });
+
+      //Add event listener to loop through all
+      //options and set each element in
+      //object constructor to the various option
+      //values
+      select.forEach((selection) => {
+        selection.addEventListener("change", function () {
+          /* if (selection.id === "day") {
+                         day = selection.value;
+                       }*/
+          if (selection.id === "month") {
+            month = selection.value;
+          }
+          if (selection.value === "month") {
+            selection.style.color = "rgba(0, 0, 0, 0.5)";
+          } else {
+            selection.style.color = "black";
+          }
+        });
+      });
+
+      //function to clear objects, input and select fields
+      function clearInput() {
+        //Loop through inputs
+        inputs.forEach((input) => {
+          //Clear all values in object
+          name = "";
+          year = "";
+
+          //Clear all input fields
+          input.value = "";
+        });
+
+        //Loop through select
+        select.forEach((selection) => {
+          //Clear all values in object
+          //day = "";
+          month = "";
+
+          //Note that if fields are cleared
+          //default month will be removed
+          //Solution - set value to month and
+          //increase transparency
+          selection.value = "month";
+          firstChild.setAttribute("style", "color: rgba(0, 0, 0, 0.5");
+        });
+        return;
+      }
+
+      //Add event listener to submit button
+      submitBtn.addEventListener("click", updateSubmitBtn);
+
+      //Form validation function
+      function validateForm() {
+        if (name === "") {
+          alert("Please type a name.");
+          isValid = false;
+          //'return' prevents all alerts displaying one
+          //after the other when "OK" button pressed
+          return;
+        } else {
+          isValid = true;
+        }
+        /*if (day === "" || day === "day") {
+                       alert("Please select a day.");
+                       isValid = false;
+                       return;
+                     } else {
+                       isValid = true;
+                     }*/
+        if (month === "" || month === "month") {
+          alert("Please select a month.");
+          isValid = false;
+          return;
+        } else {
+          isValid = true;
+        }
+        if (year === "") {
+          alert("Please type a year.");
+          isValid = false;
+          return;
+        } else {
+          isValid = true;
+        }
+        return;
+      }
+
+      function displaySavedInfo() {
+        //Loop through storageList
+        for (let i = 0; i < storageList.length; i++) {
+          index = i;
+
+          //Create table rows dynamically
+          let displayRow = document.createElement("tr");
+          //console.log(displayRow);
+
+          //Create table data cells dynamically
+          let displayName = document.createElement("td");
+          displayName.style.textAlign = "left";
+          //let displayDay = document.createElement("td");
+          let displayYear = document.createElement("td");
+          let displayMonth = document.createElement("td");
+
+          //Create delete button dynamically
+          let deleteBtn = document.createElement("button");
+
+          //Assign class and id to rows and delete btns
+          deleteBtn.className = "del";
+          displayRow.className = "row";
+          deleteBtn.id = index;
+          displayRow.id = index;
+
+          //Assign value to delete button
+          deleteBtn.textContent = "delete";
+
+          //Assign value to table data cell variables
+          displayName.textContent = Object.values(storageList)[index].name;
+          // displayDay.textContent = day;
+          displayYear.textContent = Object.values(storageList)[index].year;
+          displayMonth.textContent = Object.values(storageList)[index].month;
+
+          //Append table data cell variables to row
+          displayRow.appendChild(displayName);
+          //displayRow.appendChild(displayDay);
+          displayRow.appendChild(displayYear);
+          displayRow.appendChild(displayMonth);
+
+          //Append delete button to row
+          displayRow.appendChild(deleteBtn);
+
+          //Append table row to table
+          table.appendChild(displayRow);
+        }
+        return;
+      }
+
+      //Assign/ declare variables
+      //let storageList = [];
+      let years = 0;
+      let months = 0;
+
+      //Create a function to handle submit button
+      function updateSubmitBtn(e) {
+        if (this.id === "submit-btn")
+          //Run validate form function
+          validateForm();
+        if (isValid === false) {
+          console.log("The form data is invalid. Please review form.");
+          return;
+        } else if ((isValid = true)) {
+          //Populate students array
+          students.push(new studentData());
+
+          //Reference current date
+          const date = new Date();
+
+          //Loop through each pupil
+          students.forEach((pupil) => {
+            //Get years
+            if (pupil.year !== 10 && pupil.year !== 11 && pupil.year !== 12) {
+              years = date.getFullYear() - pupil.year;
+            } else {
+              years = date.getFullYear() - 1 - pupil.year;
+            }
+
+            //Get Months
+            if (pupil.month == 1) {
+              months = 8;
+            } else if (pupil.month == 2) {
+              months = 7;
+            } else if (pupil.month == 3) {
+              months = 6;
+            } else if (pupil.month == 4) {
+              months = 5;
+            } else if (pupil.month == 5) {
+              months = 4;
+            } else if (pupil.month == 6) {
+              months = 3;
+            } else if (pupil.month == 7) {
+              months = 2;
+            } else if (pupil.month == 8) {
+              months = 1;
+            } else if (pupil.month === 9) {
+              months = 0;
+            } else if (pupil.month == 10) {
+              months = 11;
+            } else if (pupil.month == 11) {
+              months = 10;
+            } else if (pupil.month == 12) {
+              months = 9;
+            }
+          });
+
+          displayInfo();
+
+          clearInput();
+        } //Is valid ends here!
+        //Reload page - necessary for delete btns to work
+        //immediately
+        location.reload();
+        return;
+      }
+
+      //Populate students and storageList
+      function populateStorageList() {
+        //Loop through storageList
+        for (let i = 0; i < storageList.length; i++) {
+          index = i;
+        }
+
+        //Populate storageList
+        storageList.push(
+          new studentData((name = name), (year = years), (month = months))
+        );
+
+        //Save storageList to localStorge with key 'pupil'
+        localStorage.setItem("pupil", JSON.stringify(storageList));
+      }
+
+      function displayInfo() {
+        populateStorageList();
+
+        //Create table rows dynamically
+        let displayRow = document.createElement("tr");
+        //console.log(displayRow);
+
+        //Create table data cells dynamically
+        let displayName = document.createElement("td");
+        displayName.style.textAlign = "left";
+        //let displayDay = document.createElement("td");
+        let displayYear = document.createElement("td");
+        let displayMonth = document.createElement("td");
+
+        //Create delete button dynamically
+        let deleteBtn = document.createElement("button");
+
+        //Loop through storageList
+        for (let i = 0; i < storageList.length; i++) {
+          index = i;
+        }
+
+        //Assign class and id to rows and delete btns
+        deleteBtn.className = "del";
+        displayRow.className = "row";
+        deleteBtn.id = index;
+        displayRow.id = index;
+
+        //Assign value to delete button
+        deleteBtn.textContent = "delete";
+
+        //Assign value to table data cell variables
+        displayName.textContent = name;
+        // displayDay.textContent = day;
+        displayYear.textContent = years;
+        displayMonth.textContent = months;
+
+        //Append table data cell variables to row
+        displayRow.appendChild(displayName);
+        //displayRow.appendChild(displayDay);
+        displayRow.appendChild(displayYear);
+        displayRow.appendChild(displayMonth);
+
+        //Append delete button to row
+        displayRow.appendChild(deleteBtn);
+
+        //Append table row to table
+        table.appendChild(displayRow);
+
+        let deleteBtns = document.querySelectorAll(".del");
+        let rows = document.querySelectorAll(".row");
+        return;
+      }
+
+      //Create Delete btn function
+      function updateDeleteBtn(e) {
+        console.log("working");
+        //loop through each row
+        rows.forEach((row) => {
+          //Empty localStorage
+          //localStorage.pupil = [];
+          if (this.id === row.id) {
+            row.remove();
+            //Remove data at specifc index
+            delete storageList[this.id];
+
+            //Remove empty space
+            storageList = storageList.flat();
+
+            console.log(storageList);
+            //Reset storageList
+            localStorage.setItem("pupil", JSON.stringify(storageList));
+          }
+        });
+        return;
+      }
+
+      //Delete rows dynamically
+      //Reference delete btns and rows
+      let deleteBtns = document.querySelectorAll(".del");
+      let rows = document.querySelectorAll(".row");
+
+      //Add event listener on deletebtns
+      deleteBtns.forEach((deleteBtn) => {
+        deleteBtn.addEventListener("click", updateDeleteBtn);
+      });
+    </script>
+  </body>
+</html>
